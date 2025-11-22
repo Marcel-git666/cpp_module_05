@@ -1,4 +1,5 @@
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 #include <exception>
 
 #define GREEN "\033[0;32m"
@@ -7,79 +8,68 @@
 #define BLUE "\033[0;34m"
 #define NC "\033[0m"
 
-int main(void) {
-    std::cout << BLUE << "=== Bureaucrat Tests ===" << NC << std::endl
-              << std::endl;
-
-    std::cout << GREEN << "[TEST] Creating bureaucrat with valid grade (42)"
-              << NC << std::endl;
-    Bureaucrat b("John", 42);
+int main() {
+    std::cout << BLUE << "=== Quick Bureaucrat Tests ===" << NC << std::endl;
+    Bureaucrat b("Bob", 42);
     std::cout << b << std::endl;
-
-    std::cout << RED << "[TEST] Creating bureaucrat with grade 0 (should fail)"
-              << NC << std::endl;
+    b.decrementGrade();
+    std::cout << b << std::endl;
     try {
-        Bureaucrat c("Kate", 0);
+        Bureaucrat c("Charlize", -3);
         std::cout << YELLOW << "WARNING: Should have thrown exception!" << NC
                   << std::endl;
     } catch (std::exception &e) {
         std::cout << GREEN << "✓ Exception caught: " << e.what() << NC
                   << std::endl;
     }
-    std::cout << std::endl;
 
-    std::cout << RED
-              << "[TEST] Creating bureaucrat with grade 151 (should fail)" << NC
+    std::cout << BLUE << "=== Form Creation Tests ===" << NC << std::endl;
+    Form f1("F1", 41, 42);
+    std::cout << f1 << std::endl;
+    try {
+        Form f2("F2", -10, 42);
+        std::cout << YELLOW << "WARNING: Should have thrown exception!" << NC
+                  << std::endl;
+    } catch (std::exception &e) {
+        std::cout << GREEN << "✓ Exception caught: " << e.what() << NC
+                  << std::endl;
+    }
+
+    try {
+        Form f3("F2", 10, 420);
+        std::cout << YELLOW << "WARNING: Should have thrown exception!" << NC
+                  << std::endl;
+    } catch (std::exception &e) {
+        std::cout << GREEN << "✓ Exception caught: " << e.what() << NC
+                  << std::endl;
+    }
+
+    std::cout << BLUE << "=== Form Signing Tests ===" << NC << std::endl;
+    b.signForm(f1);
+    std::cout << f1 << std::endl;
+    b.incrementGrade();
+    std::cout << b << std::endl;
+    b.incrementGrade();
+    std::cout << b << std::endl;
+    b.signForm(f1);
+    std::cout << f1 << std::endl;
+
+    std::cout << RED << "[TEST] Signing with insufficient grade" << NC
               << std::endl;
-    try {
-        Bureaucrat invalid("Bob", 151);
-        std::cout << YELLOW << "WARNING: Should have thrown exception!" << NC
-                  << std::endl;
-    } catch (std::exception &e) {
-        std::cout << GREEN << "✓ Exception caught: " << e.what() << NC
-                  << std::endl;
-    }
-    std::cout << std::endl;
+    Bureaucrat lowGuy("LowGuy", 100);
+    Form strictForm("StrictForm", 50, 50);
+    lowGuy.signForm(strictForm);
+    std::cout << strictForm << std::endl;
 
-    std::cout << RED
-              << "[TEST] Decrementing bureaucrat at grade 150 (should fail)"
-              << NC << std::endl;
-    try {
-        Bureaucrat d("Eve", 150);
-        std::cout << "Before: " << d;
-        d.decrementGrade();
-        std::cout << YELLOW << "WARNING: Should have thrown exception!" << NC
-                  << std::endl;
-    } catch (std::exception &e) {
-        std::cout << GREEN << "✓ Exception caught: " << e.what() << NC
-                  << std::endl;
-    }
-    std::cout << std::endl;
-
-    std::cout << RED
-              << "[TEST] Incrementing bureaucrat at grade 1 (should fail)" << NC
+    std::cout << GREEN << "[TEST] Signing with sufficient grade" << NC
               << std::endl;
-    try {
-        Bureaucrat e("Alice", 1);
-        std::cout << "Before: " << e;
-        e.incrementGrade();
-        std::cout << YELLOW << "WARNING: Should have thrown exception!" << NC
-                  << std::endl;
-    } catch (std::exception &e) {
-        std::cout << GREEN << "✓ Exception caught: " << e.what() << NC
-                  << std::endl;
-    }
-    std::cout << std::endl;
+    Bureaucrat highGuy("HighGuy", 40);
+    highGuy.signForm(strictForm);
+    std::cout << strictForm << std::endl;
 
-    std::cout << GREEN << "[TEST] Normal increment and decrement operations"
-              << NC << std::endl;
-    Bureaucrat f("Tom", 75);
-    std::cout << "Initial: " << f;
-    f.incrementGrade();
-    std::cout << "After increment: " << f;
-    f.decrementGrade();
-    std::cout << "After decrement: " << f;
-    std::cout << std::endl;
+    std::cout << YELLOW << "[TEST] Signing already signed form" << NC
+              << std::endl;
+    highGuy.signForm(strictForm);
 
     std::cout << BLUE << "=== All tests completed ===" << NC << std::endl;
 

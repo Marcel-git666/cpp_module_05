@@ -20,11 +20,11 @@ OBJ_DIR = obj
 # === Files ===
 
 # List of all source (.cpp) files
-SRCS = main.cpp Bureaucrat.cpp
+SRCS = main.cpp Bureaucrat.cpp Form.cpp
 
 
 # List of all header (.hpp) files for dependency tracking
-HEADERS = Bureaucrat.hpp \
+HEADERS = Bureaucrat.hpp Form.hpp \
 
 
 # Generate the list of object files from the source files

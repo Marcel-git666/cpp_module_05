@@ -4,12 +4,14 @@
 #include <iostream>
 #include <string>
 
+class Bureaucrat;
+
 class Form {
   private:
     const std::string name;
     bool isSigned;
-    int gradeToSign;
-    int gradeToExecute;
+    const int gradeToSign;
+    const int gradeToExecute;
 
   public:
     // Orthodox Canonical Form
@@ -20,9 +22,14 @@ class Form {
 
     // Other methods
     Form(std::string const &name, int gradeToSign, int gradeToExecute);
+
+    // Getters
     std::string const &getName() const;
     int getGradeToSign() const;
     int getGradeToExecute() const;
+    bool getIsSigned() const;
+
+    void beSigned(Bureaucrat const &b);
 
     // Exceptions
     class GradeTooHighException : public std::exception {
@@ -34,6 +41,6 @@ class Form {
     };
 };
 
-std::ostream &operator<<(std::ostream &out, Form const &b);
+std::ostream &operator<<(std::ostream &out, Form const &f);
 
 #endif
