@@ -10,9 +10,6 @@ class PresidentialPardonForm : public AForm {
   private:
     std::string target;
 
-  protected:
-    virtual void do_execute_checked(Bureaucrat const &executor) const;
-
   public:
     // Orthodox Canonical Form
     PresidentialPardonForm(void);
@@ -22,6 +19,8 @@ class PresidentialPardonForm : public AForm {
 
     // Other methods
     PresidentialPardonForm(std::string const &target);
+
+    virtual void execute(Bureaucrat const &executor) const;
 
     // Getters
     std::string const &getTarget() const;
