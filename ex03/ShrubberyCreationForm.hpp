@@ -10,6 +10,9 @@ class ShrubberyCreationForm : public AForm {
   private:
     std::string target;
 
+  protected:
+    virtual void do_execute_checked(Bureaucrat const &executor) const;
+
   public:
     // Orthodox Canonical Form
     ShrubberyCreationForm(void);
@@ -19,8 +22,6 @@ class ShrubberyCreationForm : public AForm {
 
     // Other methods
     ShrubberyCreationForm(std::string const &target);
-
-    virtual void execute(Bureaucrat const &executor) const;
 
     class FileNotOpenedException : public std::exception {
         const char *what() const throw();

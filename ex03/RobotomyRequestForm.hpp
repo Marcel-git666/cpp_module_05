@@ -10,6 +10,9 @@ class RobotomyRequestForm : public AForm {
   private:
     std::string target;
 
+  protected:
+    virtual void do_execute_checked(Bureaucrat const &executor) const;
+
   public:
     // Orthodox Canonical Form
     RobotomyRequestForm(void);
@@ -19,8 +22,6 @@ class RobotomyRequestForm : public AForm {
 
     // Other methods
     RobotomyRequestForm(std::string const &target);
-
-    virtual void execute(Bureaucrat const &executor) const;
 
     // Getters
     std::string const &getTarget() const;

@@ -13,6 +13,9 @@ class AForm {
     const int gradeToSign;
     const int gradeToExecute;
 
+  protected:
+    virtual void do_execute_checked(Bureaucrat const &executor) const = 0;
+
   public:
     // Orthodox Canonical Form
     AForm(void);
@@ -30,7 +33,7 @@ class AForm {
     bool getIsSigned() const;
 
     void beSigned(Bureaucrat const &b);
-    virtual void execute(Bureaucrat const &executor) const = 0;
+    void execute(Bureaucrat const &executor) const;
 
     // Exceptions
     class GradeTooHighException : public std::exception {

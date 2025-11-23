@@ -24,13 +24,8 @@ RobotomyRequestForm::~RobotomyRequestForm(void) {}
 RobotomyRequestForm::RobotomyRequestForm(std::string const &target)
     : AForm("RobotomyRequestForm", 72, 45), target(target) {}
 
-void RobotomyRequestForm::execute(Bureaucrat const &executor) const {
-    if (!getIsSigned()) {
-        throw AForm::FormNotSignedException();
-    }
-    if (executor.getGrade() > getGradeToExecute()) {
-        throw AForm::GradeTooLowException();
-    }
+void RobotomyRequestForm::do_execute_checked(
+    Bureaucrat const & /*executor*/) const {
     std::cout << "* Bzzz.... [drilling noises]\n";
     if (rand() % 2 == 0) {
         std::cout << target << " has been robotomized successfully.\n";

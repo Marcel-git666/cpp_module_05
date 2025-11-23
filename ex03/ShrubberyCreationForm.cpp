@@ -24,13 +24,8 @@ ShrubberyCreationForm::~ShrubberyCreationForm(void) {}
 ShrubberyCreationForm::ShrubberyCreationForm(std::string const &target)
     : AForm("ShrubberyCreationForm", 145, 137), target(target) {}
 
-void ShrubberyCreationForm::execute(Bureaucrat const &executor) const {
-    if (!getIsSigned()) {
-        throw AForm::FormNotSignedException();
-    }
-    if (executor.getGrade() > getGradeToExecute()) {
-        throw AForm::GradeTooLowException();
-    }
+void ShrubberyCreationForm::do_execute_checked(
+    Bureaucrat const & /*executor*/) const {
     std::ofstream myfile;
     myfile.open((target + "_shrubbery").c_str());
     if (!myfile.is_open()) {
