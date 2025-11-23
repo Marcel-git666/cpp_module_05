@@ -19,8 +19,8 @@ AForm *Intern::createPardon(std::string const &target) {
 
 // Orthodox Canonical Form
 Intern::Intern(void) {}
-Intern::Intern(Intern const &other) {}
-Intern &Intern::operator=(Intern const &other) { return *this; }
+Intern::Intern(Intern const &) {}
+Intern &Intern::operator=(Intern const &) { return *this; }
 
 Intern::~Intern(void) {}
 
@@ -41,17 +41,19 @@ AForm *Intern::makeForm(std::string name, std::string target) {
 }
 
 std::string const &Intern::getFormName(int index) {
-    if (index >= 0 && index < 3) {
-        return formNames[index];
-    } else {
-        return "";
+    if (index < 0 || index >= 3) {
+        throw std::out_of_range("Invalid form index");
     }
+    return formNames[index];
 }
 
-std::ostream &operator<<(std::ostream &out, Intern const &i) {
+std::ostream &operator<<(std::ostream &out, Intern const &) {
     out << "Intern can create: ";
-    for (int i = 0; i < 3; i++) {
-        out << Intern::getFormName(i);
+    for (int idx = 0; idx < 3; idx++) {
+        out << Intern::getFormName(idx);
+        if (idx < 2) {
+            out << ", ";
+        }
     }
     out << '\n';
     return out;

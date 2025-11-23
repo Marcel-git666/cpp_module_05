@@ -21,12 +21,12 @@ OBJ_DIR = obj
 
 # List of all source (.cpp) files
 SRCS = main.cpp Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp \
-		PresidentialPardonForm.cpp
+		PresidentialPardonForm.cpp Intern.cpp
 
 
 # List of all header (.hpp) files for dependency tracking
 HEADERS = Bureaucrat.hpp AForm.hpp ShrubberyCreationForm.hpp RobotomyRequestForm.hpp \
-		PresidentialPardonForm.hpp
+		PresidentialPardonForm.hpp Intern.hpp
 
 # Generate the list of object files from the source files
 OBJS = $(patsubst %.cpp,$(OBJ_DIR)/%.o,$(SRCS))
