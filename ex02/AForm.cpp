@@ -1,58 +1,62 @@
-#include "Form.hpp"
+#include "AForm.hpp"
 #include "Bureaucrat.hpp"
 
 // Orthodox Canonical Form
-Form::Form(void)
+AForm::AForm(void)
     : name("Default form"), isSigned(false), gradeToSign(150),
       gradeToExecute(150) {}
 
-Form::Form(Form const &other)
+AForm::AForm(AForm const &other)
     : name(other.name), isSigned(other.isSigned),
       gradeToSign(other.gradeToSign), gradeToExecute(other.gradeToExecute) {}
 
-Form &Form::operator=(Form const &other) {
+AForm &AForm::operator=(AForm const &other) {
     if (this != &other) {
         isSigned = other.isSigned;
     }
     return *this;
 }
-Form::~Form(void) {}
+AForm::~AForm(void) {}
 
 // Other methods
-Form::Form(std::string const &name, int gradeToSign, int gradeToExecute)
+AForm::AForm(std::string const &name, int gradeToSign, int gradeToExecute)
     : name(name), isSigned(false), gradeToSign(gradeToSign),
       gradeToExecute(gradeToExecute) {
     if (gradeToSign < 1 || gradeToExecute < 1) {
-        throw Form::GradeTooHighException();
+        throw AForm::GradeTooHighException();
     }
     if (gradeToSign > 150 || gradeToExecute > 150) {
-        throw Form::GradeTooLowException();
+        throw AForm::GradeTooLowException();
     }
 }
 
 // Getters
-std::string const &Form::getName() const { return name; }
-int Form::getGradeToSign() const { return gradeToSign; }
-int Form::getGradeToExecute() const { return gradeToExecute; }
-bool Form::getIsSigned() const { return isSigned; }
+std::string const &AForm::getName() const { return name; }
+int AForm::getGradeToSign() const { return gradeToSign; }
+int AForm::getGradeToExecute() const { return gradeToExecute; }
+bool AForm::getIsSigned() const { return isSigned; }
 
-void Form::beSigned(Bureaucrat const &b) {
+void AForm::beSigned(Bureaucrat const &b) {
     if (b.getGrade() > gradeToSign) {
-        throw Form::GradeTooLowException();
+        throw AForm::GradeTooLowException();
     }
     isSigned = true;
 }
 
 // Exceptions
-const char *Form::GradeTooHighException::what() const throw() {
+const char *AForm::GradeTooHighException::what() const throw() {
     return "Form grade too high!";
 }
 
-const char *Form::GradeTooLowException::what() const throw() {
+const char *AForm::GradeTooLowException::what() const throw() {
     return "Form grade too low!";
 }
 
-std::ostream &operator<<(std::ostream &out, Form const &f) {
+const char *AForm::FormNotSignedException::what() const throw() {
+    return "Form not signed, can't execute!";
+}
+
+std::ostream &operator<<(std::ostream &out, AForm const &f) {
     out << "Form " << f.getName()
         << ", signed: " << (f.getIsSigned() ? "yes" : "no")
         << ", grade to sign: " << f.getGradeToSign()
