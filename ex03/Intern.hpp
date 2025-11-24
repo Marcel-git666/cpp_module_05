@@ -8,13 +8,14 @@ class AForm;
 
 class Intern {
   private:
-    static const std::string formNames[3];
-    typedef AForm *(Intern::*FormCreator)(std::string const &);
-    AForm *createShrubbery(std::string const &target);
-    AForm *createRobotomy(std::string const &target);
-    AForm *createPardon(std::string const &target);
+    typedef AForm *(Intern::*FormCreator)(std::string const &) const;
+    static const FormCreator creators[3];
+    AForm *createShrubbery(std::string const &target) const;
+    AForm *createRobotomy(std::string const &target) const;
+    AForm *createPardon(std::string const &target) const;
 
   public:
+    static const std::string formNames[3];
     // Orthodox Canonical Form
     Intern(void);
     Intern(Intern const &other);
@@ -22,8 +23,7 @@ class Intern {
     ~Intern(void);
 
     // Other methods
-    AForm *makeForm(std::string name, std::string target);
-    static std::string const &getFormName(int index);
+    AForm *makeForm(std::string const &name, std::string const &target) const;
 };
 
 std::ostream &operator<<(std::ostream &out, Intern const &i);

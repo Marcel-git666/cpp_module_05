@@ -5,15 +5,19 @@
 
 const std::string Intern::formNames[3] = {
     "shrubbery creation", "robotomy request", "presidential pardon"};
-AForm *Intern::createShrubbery(std::string const &target) {
+
+const Intern::FormCreator Intern::creators[3] = {
+    &Intern::createShrubbery, &Intern::createRobotomy, &Intern::createPardon};
+
+AForm *Intern::createShrubbery(std::string const &target) const {
     return new ShrubberyCreationForm(target);
 }
 
-AForm *Intern::createRobotomy(std::string const &target) {
+AForm *Intern::createRobotomy(std::string const &target) const {
     return new RobotomyRequestForm(target);
 }
 
-AForm *Intern::createPardon(std::string const &target) {
+AForm *Intern::createPardon(std::string const &target) const {
     return new PresidentialPardonForm(target);
 }
 
@@ -25,10 +29,8 @@ Intern &Intern::operator=(Intern const &) { return *this; }
 Intern::~Intern(void) {}
 
 // Other methods
-AForm *Intern::makeForm(std::string name, std::string target) {
-    FormCreator creators[3] = {&Intern::createShrubbery,
-                               &Intern::createRobotomy, &Intern::createPardon};
-
+AForm *Intern::makeForm(std::string const &name,
+                        std::string const &target) const {
     for (int i = 0; i < 3; i++) {
         if (name == formNames[i]) {
             std::cout << "Intern creates " << name << std::endl;
@@ -40,17 +42,10 @@ AForm *Intern::makeForm(std::string name, std::string target) {
     return NULL;
 }
 
-std::string const &Intern::getFormName(int index) {
-    if (index < 0 || index >= 3) {
-        throw std::out_of_range("Invalid form index");
-    }
-    return formNames[index];
-}
-
 std::ostream &operator<<(std::ostream &out, Intern const &) {
     out << "Intern can create: ";
     for (int idx = 0; idx < 3; idx++) {
-        out << Intern::getFormName(idx);
+        out << Intern::formNames[idx];
         if (idx < 2) {
             out << ", ";
         }
